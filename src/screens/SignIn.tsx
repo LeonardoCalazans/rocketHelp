@@ -1,35 +1,51 @@
 import { useState } from "react";
+import auth from "@react-native-firebase/auth";
 import { VStack, Heading, useTheme, Icon } from "native-base";
 import { Envelope, Key } from "phosphor-react-native";
-
+import { Alert } from "react-native";
 import Logo from "../assets/logo_primary.svg";
-
 import { Button, Input } from "../components";
 
 const SignIn = () => {
-  const [user, setUser] = useState<UserAccount>({} as UserAccount);
-  const [name, setName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [alert, setAlert] = useState(false);
 
   const { colors } = useTheme();
 
   const handleSignIn = () => {
-    if (!name || !password) return setAlert(true);
+    if (!email || !password) {
+      return Alert.alert("Entrar", "Informe e-mail e senha.");
+    }
 
-    setUser({
-      name: name,
-      password: password,
-    });
+    setIsLoading(true);
 
-    console.log(user.name, user.password, alert);
+    auth()
+      .signInWithEmailAndPassword(email, password)
+      .catch((error) => {
+        setIsLoading(false);
+
+        if (error.code === "auth/invalid-email") {
+          return Alert.alert("Entrar", "E-mail inválido.");
+        }
+
+        if (error.code === "auth/wrong-password") {
+          return Alert.alert("Entrar", "E-mail ou senha inválida.");
+        }
+
+        if (error.code === "auth/user-not-found") {
+          return Alert.alert("Entrar", "E-mail ou senha inválida.");
+        }
+
+        return Alert.alert("Entrar", "Não foi possível acessar");
+      });
   };
 
   return (
-    <VStack flex={1} alignItems="center" bg={colors.gray[600]} px={8} pt={24}>
+    <VStack flex={1} alignItems="center" bg="gray.600" px={8} pt={24}>
       <Logo />
 
-      <Heading color={colors.gray[100]} fontSize="xl" mt={20} mb={6}>
+      <Heading color="gray.100" fontSize="xl" mt={20} mb={6}>
         Acesse sua conta
       </Heading>
 
@@ -38,19 +54,22 @@ const SignIn = () => {
         InputLeftElement={
           <Icon as={<Envelope color={colors.gray[300]} />} ml={4} />
         }
-        active={!name && alert}
-        onChangeText={setName}
+        onChangeText={setEmail}
       />
 
       <Input
         placeholder="Senha"
         InputLeftElement={<Icon as={<Key color={colors.gray[300]} />} ml={4} />}
         secureTextEntry
-        active={!password && alert}
         onChangeText={setPassword}
       />
 
-      <Button title="Entrar" onPress={handleSignIn} />
+      <Button
+        title="Entrar"
+        w="full"
+        onPress={handleSignIn}
+        isLoading={isLoading}
+      />
     </VStack>
   );
 };
