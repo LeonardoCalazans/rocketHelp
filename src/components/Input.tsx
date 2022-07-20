@@ -1,7 +1,6 @@
 import {
   Input as NativeBaseInput,
   IInputProps,
-  Icon,
   IIconProps,
   useTheme,
 } from "native-base";
@@ -18,7 +17,6 @@ const Input = ({ active, children, ...rest }: Props) => {
     <NativeBaseInput
       bg={colors.gray[700]}
       h={14}
-      mb={4}
       size="md"
       borderWidth={active ? 1 : 0}
       fontSize={fontSizes.md}
@@ -26,7 +24,6 @@ const Input = ({ active, children, ...rest }: Props) => {
       color={colors.white}
       placeholderTextColor={colors.gray[300]}
       borderColor={active && "danger.600"}
-      InputLeftElement={<Icon as={children} ml={4}  />}
       _focus={{
         borderWidth: 1,
         borderColor: colors.green[500],
