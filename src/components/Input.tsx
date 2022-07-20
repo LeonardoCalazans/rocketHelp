@@ -17,6 +17,7 @@ const Input = ({ active, children, ...rest }: Props) => {
     <NativeBaseInput
       bg={colors.gray[700]}
       h={14}
+      mb={4}
       size="md"
       borderWidth={active ? 1 : 0}
       fontSize={fontSizes.md}
