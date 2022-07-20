@@ -153,15 +153,15 @@ export const Details = () => {
             />
           )}
         </CardDetails>
+        
+        {order.status === "open" && (
+          <Button
+            title="Encerrar solicitação"
+            mb={4}
+            onPress={handleOrderClose}
+          />
+        )}
       </ScrollView>
-
-      {order.status === "open" && (
-        <Button
-          title="Encerrar solicitação"
-          m={5}
-          onPress={handleOrderClose}
-        />
-      )}
     </VStack>
   );
 };
