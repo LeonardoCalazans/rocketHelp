@@ -32,6 +32,7 @@ const Header = ({ title, ...rest }: Props) => {
     >
       <IconButton
         icon={<CaretLeft color={colors.gray[200]} size={24} />}
+        backgroundColor={colors.gray[700]}
         onPress={handleGoBack}
       />
 
