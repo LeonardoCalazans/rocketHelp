@@ -5,46 +5,15 @@ import { Envelope, Key } from "phosphor-react-native";
 import { Alert } from "react-native";
 import Logo from "../assets/logo_primary.svg";
 import { Button, Input } from "../components";
-import { useNavigation } from "@react-navigation/native";
 
-const SignIn = () => {
+const SignUp = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigation = useNavigation();
+
   const { colors } = useTheme();
 
-  const handleSignUp = () => {
-    navigation.navigate("Signup");
-  };
-
-  const handleSignIn = () => {
-    if (!email || !password) {
-      return Alert.alert("Entrar", "Informe e-mail e senha.");
-    }
-
-    setIsLoading(true);
-
-    auth()
-      .signInWithEmailAndPassword(email, password)
-      .catch((error) => {
-        setIsLoading(false);
-
-        if (error.code === "auth/invalid-email") {
-          return Alert.alert("Entrar", "E-mail inválido.");
-        }
-
-        if (error.code === "auth/wrong-password") {
-          return Alert.alert("Entrar", "E-mail ou senha inválida.");
-        }
-
-        if (error.code === "auth/user-not-found") {
-          return Alert.alert("Entrar", "E-mail ou senha inválida.");
-        }
-
-        return Alert.alert("Entrar", "Não foi possível acessar");
-      });
-  };
+  const handleSignUp = () => {};
 
   return (
     <VStack flex={1} alignItems="center" bg="gray.600" px={8} pt={24}>
@@ -72,18 +41,12 @@ const SignIn = () => {
       <Button
         title="Entrar"
         w="full"
-        onPress={handleSignIn}
+        onPress={handleSignUp}
         isLoading={isLoading}
       />
-
-      <Button
-        title="Cadastrar"
-        w="full"
-        backgroundColor={"transparent"}
-        onPress={handleSignUp}
-      />
+      
     </VStack>
   );
 };
 
-export default SignIn;
+export default SignUp;

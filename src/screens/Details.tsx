@@ -31,7 +31,6 @@ export const Details = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const { colors } = useTheme();
-
   const { orderId } = route.params as RouteParams;
 
   const handleOrderClose = () => {
@@ -153,7 +152,7 @@ export const Details = () => {
             />
           )}
         </CardDetails>
-        
+
         {order.status === "open" && (
           <Button
             title="Encerrar solicitação"
